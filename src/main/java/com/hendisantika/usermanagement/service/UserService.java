@@ -13,23 +13,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
-
-/**
- * Created by IntelliJ IDEA.
- * Project : user-management
- */
 @Service
 public class UserService {
     @Autowired
     private UserRepository repository;
-
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
-
     public Iterable<User> getAllUsers() {
         return repository.findAll();
     }
-
     private boolean checkUsernameAvailable(User user) throws Exception {
         Optional<User> userFound = repository.findByUsername(user.getUsername());
         if (userFound.isPresent()) {
@@ -37,18 +29,15 @@ public class UserService {
         }
         return true;
     }
-
     private boolean checkPasswordValid(User user) throws Exception {
         if (user.getConfirmPassword() == null || user.getConfirmPassword().isEmpty()) {
             throw new CustomFieldValidationException("Confirm Password is required", "confirmPassword");
         }
-
         if (!user.getPassword().equals(user.getConfirmPassword())) {
             throw new CustomFieldValidationException("Password and Confirm Password are not the same", "password");
         }
         return true;
     }
-
     public User createUser(User user) throws Exception {
         if (checkUsernameAvailable(user) && checkPasswordValid(user)) {
             String encodedPassword = bCryptPasswordEncoder.encode(user.getPassword());
@@ -57,24 +46,15 @@ public class UserService {
         }
         return user;
     }
-
     public User getUserById(Long id) throws UsernameOrIdNotFound {
         return repository.findById(id).orElseThrow(() -> new UsernameOrIdNotFound("User id does not exist."));
     }
-
     public User updateUser(User fromUser) throws Exception {
         User toUser = getUserById(fromUser.getId());
         mapUser(fromUser, toUser);
         return repository.save(toUser);
     }
 
-
-    /**
-     * Map everything but the password.
-     *
-     * @param from
-     * @param to
-     */
     protected void mapUser(User from, User to) {
         to.setUsername(from.getUsername());
         to.setFirstName(from.getFirstName());
@@ -82,13 +62,11 @@ public class UserService {
         to.setEmail(from.getEmail());
         to.setRoles(from.getRoles());
     }
-
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public void deleteUser(Long id) throws UsernameOrIdNotFound {
         User user = getUserById(id);
         repository.delete(user);
     }
-
     public User changePassword(ChangePasswordForm form) throws Exception {
         User user = getUserById(form.getId());
 
@@ -110,13 +88,11 @@ public class UserService {
     }
 
     private boolean isLoggedUserADMIN() {
-        //Get the logged in user
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         UserDetails loggedUser = null;
         Object roles = null;
 
-        //Verify that this fetched session object is the user
         if (principal instanceof UserDetails) {
             loggedUser = (UserDetails) principal;
 
@@ -128,20 +104,14 @@ public class UserService {
     }
 
     private User getLoggedUser() throws Exception {
-        //Get the logged in user
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-
         UserDetails loggedUser = null;
-
-        //Verify that this fetched session object is the user
         if (principal instanceof UserDetails) {
             loggedUser = (UserDetails) principal;
         }
-
         User myUser = repository
                 .findByUsername(loggedUser.getUsername()).orElseThrow(() -> new Exception("Error getting the logged " +
                         "in user from the session."));
-
         return myUser;
     }
 

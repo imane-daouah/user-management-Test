@@ -15,10 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by IntelliJ IDEA.
- * Project : user-management
- */
 @Service
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -1,5 +1,4 @@
 package com.hendisantika.usermanagement.controller;
-
 import com.hendisantika.usermanagement.dto.ChangePasswordForm;
 import com.hendisantika.usermanagement.entity.Role;
 import com.hendisantika.usermanagement.entity.User;
@@ -30,11 +29,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
-
-/**
- * Created by IntelliJ IDEA.
- * Project : user-management
- */
 @Controller
 @Slf4j
 @RequiredArgsConstructor

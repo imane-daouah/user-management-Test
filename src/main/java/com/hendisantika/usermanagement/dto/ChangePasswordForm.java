@@ -7,10 +7,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-/**
- * Created by IntelliJ IDEA.
- * Project : user-management
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

@@ -23,9 +23,7 @@ public class WebSecurityConfig {
     private final String[] PUBLIC_LINK = new String[]{
             "/include/**", "/css/**", "/icons/**", "/img/**", "/js/**", "/layer/**", "/static/**"
     };
-
     private final PasswordEncoder bCryptPasswordEncoder;
-
     private final UserDetailsService userDetailsService;
 
     @Bean
@@ -35,8 +33,6 @@ public class WebSecurityConfig {
         auth.setPasswordEncoder(bCryptPasswordEncoder);
         return auth;
     }
-
-
     @Bean
     public SecurityFilterChain configure(HttpSecurity http) throws Exception {
         http
@@ -61,37 +57,6 @@ public class WebSecurityConfig {
                                 .logoutSuccessUrl("/login?logout")
                                 .permitAll()
                 );
-
-//        http
-//                .authorizeHttpRequests(authorize ->
-//                        authorize
-//                                .requestMatchers(PUBLIC_LINK).permitAll()
-//                                .requestMatchers("/", "/index", "/signup").permitAll()
-//                                .anyRequest().authenticated()
-//                )
-//
-//                formLogin()
-//                .loginPage("/login")
-//                .permitAll()
-//                .defaultSuccessUrl("/userForm")
-//                .failureUrl("/login?error=true")
-//                .usernameParameter("username")
-//                .passwordParameter("password")
-//        return http.build();
-//        http.csrf().disable()
-//                .authorizeHttpRequests((authorize) ->
-//                        authorize.anyRequest().authenticated()
-//                ).formLogin(
-//                        form -> form
-//                                .loginPage("/login")
-//                                .loginProcessingUrl("/login")
-//                                .defaultSuccessUrl("/welcome")
-//                                .permitAll()
-//                ).logout(
-//                        logout -> logout
-//                                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                                .permitAll()
-//                );
         return http.build();
     }
 }

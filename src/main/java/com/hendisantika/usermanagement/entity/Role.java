@@ -1,5 +1,4 @@
 package com.hendisantika.usermanagement.entity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,10 +12,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import java.io.Serializable;
 
-/**
- * Created by IntelliJ IDEA.
- * Project : user-management
- */
 @Entity
 @Data
 @AllArgsConstructor
